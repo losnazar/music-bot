@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  postgresql:
+    image: postgres
+    container_name: postgresql
+    env_file: ./.env
+    environment:
+      - POSTGRESQL_ROOT_PASSWORD=$POSTGRESQLDB_ROOT_PASSWORD
+      - POSTGRESQL_DATABASE=$POSTGRESQLDB_DATABASE
+    ports:
+      - ${POSTGRESQLDB_LOCAL_PORT}:${POSTGRESQLDB_DOCKER_PORT}
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    restart: always
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=los.nazar24@gmail.com
+      - PGADMIN_DEFAULT_PASSWORD=nazar24
+      - PGADMIN_DEFAULT_PASSWORD_FILE=docker secret
+    ports:
+      - "8082:8082"
+  youtube-dl:
+    image: mikenye/youtube-dl
+    container_name: youtube-dl
+    restart: always
+    ports:
+      - "8079:8079"
